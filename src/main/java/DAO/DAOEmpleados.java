@@ -3,9 +3,7 @@ package DAO;
 import Conexion.Conexion;
 import Entidades.Empleados;
 import Entidades.Usuario;
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 

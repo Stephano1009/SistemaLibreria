@@ -14,7 +14,7 @@ public class DAOCargo extends Conexion{
         Cargo car;
         ResultSet rs = null;
         String sql = "select car.id_cargo, car.nombre_Cargo, car.estado  "
-                + "from cargo car order by car.nombreCargo";
+                + "from cargo car order by car.nombre_Cargo";
         try {
             this.conectar(false);
             rs = this.ejecutarOrdenDatos(sql);
