@@ -92,9 +92,9 @@ public class DAOVentas extends Conexion {
         Clientes cli;
         ResultSet rs = null;
         String sql = "SELECT V.IDVENTA, V.TIPODOCUMENTO, V.FECHA, E.NOMBRE_EMPLEADO, C.NOMBRE_CLIENTE, V.ESTADO FROM VENTAS V INNER JOIN CLIENTES C \n"
-                + "ON C.ID_CLIENTE = V.IDCLIENTE INNER JOIN Empleados E ON\n"
-                + "E.ID_EMPLEADO = V.IDEMPLEADO INNER JOIN TIPO_PAGO TP\n"
-                + "ON TP.ID_TIPO_PAGO = V.IDTIPOPAGO";
+                + "ON C.ID_CLIENTE = V.ID_CLIENTE INNER JOIN Empleados E ON\n"
+                + "E.ID_EMPLEADO = V.ID_EMPLEADO INNER JOIN TIPO_PAGO TP\n"
+                + "ON TP.ID_TIPO_PAGO = V.TIPO_PAGO";
 
         try {
             this.conectar(false);
