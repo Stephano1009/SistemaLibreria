@@ -15,8 +15,8 @@ public class DAOVentas extends Conexion {
     public void registrar(Ventas venta) throws Exception {
         ResultSet rs = null;
         int codigoVenta;
-        String sql = "INSERT INTO Ventas(SERIE, NUMERO, TIPODOCUMENTO, FECHA, "
-                + "IDTIPOPAGO, IDEMPLEADO, IDCLIENTE, ESTADO)"
+        String sql = "INSERT INTO Ventas(SERIE, NUMERO, TIPO_DOCUMENTO, FECHA, "
+                + "ID_TIPO_PAGO, ID_EMPLEADO, ID_CLIENTE, ESTADO)"
                 + "VALUES('" + venta.getSeriev() + "', '" + venta.getNumerov()
                 + "', '" + venta.getTipo_documentov() + "', '" + venta.getFechav() + "', 4, 3, " + venta.getClientes().getCodigo() + ", 1)";
 
@@ -46,7 +46,7 @@ public class DAOVentas extends Conexion {
     public int obtenerCorrelativo(String tipo) throws Exception {
         int correlativo = 0;
         ResultSet rs = null;
-        String sql = "SELECT TOP 1 NUMERO FROM VENTAS WHERE TIPODOCUMENTO = '" + tipo + "' ORDER BY IDVENTA DESC";
+        String sql = "SELECT TOP 1 NUMERO FROM VENTAS WHERE TIPO_DOCUMENTO = '" + tipo + "' ORDER BY ID_VENTA DESC";
 
         try {
             this.conectar(false);
