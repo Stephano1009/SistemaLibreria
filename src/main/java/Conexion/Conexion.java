@@ -20,7 +20,7 @@ public class Conexion {
     Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
     this.conexion = DriverManager.getConnection(
             "jdbc:sqlserver://localhost;trustServerCertificate=true;"
-            + ";databaseName=empresa;"
+            + ";databaseName=ROSVIL;"
             + "user=sa;password=alumno;");
 
     if (wTransaccion == true) {

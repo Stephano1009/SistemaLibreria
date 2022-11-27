@@ -92,8 +92,8 @@ public class DAOVentas extends Conexion {
         Clientes cli;
         ResultSet rs = null;
         String sql = "SELECT V.IDVENTA, V.TIPODOCUMENTO, V.FECHA, E.NOMBRE_EMPLEADO, C.NOMBRE_CLIENTE, V.ESTADO FROM VENTAS V INNER JOIN CLIENTES C \n"
-                + "ON C.ID_CLIENTE = V.ID_CLIENTE INNER JOIN Empleados E ON\n"
-                + "E.ID_EMPLEADO = V.ID_EMPLEADO INNER JOIN TIPO_PAGO TP\n"
+                + "ON C.ID_CLIENTE = V.ID_CLIENTE INNER JOIN Empleados E ON "
+                + "E.ID_EMPLEADO = V.ID_EMPLEADO INNER JOIN TIPO_PAGO TP "
                 + "ON TP.ID_TIPO_PAGO = V.TIPO_PAGO";
 
         try {
@@ -102,8 +102,8 @@ public class DAOVentas extends Conexion {
             ventas = new ArrayList<>();
             while (rs.next() == true) {
                 ven = new Ventas();
-                ven.setCodigov(rs.getInt("IDVENTA"));
-                ven.setTipo_documentov(rs.getString("TIPODOCUMENTO"));
+                ven.setCodigov(rs.getInt("ID_VENTA"));
+                ven.setTipo_documentov(rs.getString("TIPO_DOCUMENTO"));
                 ven.setFechav(rs.getString("FECHA"));
                 /*=====================================================*/
                 emp = new Empleados();
@@ -128,9 +128,9 @@ public class DAOVentas extends Conexion {
         ResultSet rs = null;
         String sql = "SELECT P.NOMBRE_PRODUCTO, DV.CANTIDAD, DV.PRECIOVENTA "
                 + "FROM VENTAS V INNER JOIN DETALLE_VENTA DV ON "
-                + "DV.ID_VENTA = V.IDVENTA INNER JOIN Productos P ON "
+                + "DV.ID_VENTA = V.ID_VENTA INNER JOIN Productos P ON "
                 + "P.ID_PRODUCTO = DV.ID_PRODUCTO "
-                + "WHERE V.IDVENTA = '" + v.getCodigov() + "'"
+                + "WHERE V.ID_VENTA = '" + v.getCodigov() + "'"
                 + "GROUP BY  P.NOMBRE_PRODUCTO, DV.CANTIDAD, DV.PRECIOVENTA";
 
         try {

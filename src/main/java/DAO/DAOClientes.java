@@ -56,7 +56,7 @@ public class DAOClientes extends Conexion {
     public Clientes leer(Clientes clientes) throws Exception {
         Clientes cli = null;
         ResultSet rs = null;
-        String sql = "SELECT cli.ID_CLIENTE, cli.NOMBRE_CLIENTE, cli.APELLIDO_CLIENTE, cli.NUMERODOC, cli.DIRECCION_CLIENTE, cli.TIPODOCUMENTO "
+        String sql = "SELECT cli.ID_CLIENTE, cli.NOMBRE_CLIENTE, cli.APELLIDO_CLIENTE, cli.NUMERODOC, cli.DIRECCION_CLIENTE "
                 + " FROM CLIENTES cli WHERE cli.ID_CLIENTE =  " + clientes.getCodigo();
         try {
             this.conectar(false);
@@ -68,8 +68,6 @@ public class DAOClientes extends Conexion {
                 cli.setApellido(rs.getString("APELLIDO_CLIENTE"));
                 cli.setDni(rs.getString("NUMERODOC"));
                 cli.setDireccion(rs.getString("DIRECCION_CLIENTE"));
-                cli.setTipodocumento(rs.getString("TIPODOCUMENTO"));
-
             }
         } catch (Exception e) {
             throw e;
