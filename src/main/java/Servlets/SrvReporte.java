@@ -1,8 +1,8 @@
 package Servlets;
 
-import DAO.DAOVentas;
-import Entidades.DetalleVentas;
-import Entidades.Ventas;
+import DAO.DAOVenta;
+import Entidades.DetalleVenta;
+import Entidades.Venta;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class srvReportes extends HttpServlet {
+public class SrvReporte extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -81,14 +81,14 @@ public class srvReportes extends HttpServlet {
 
 
     private void presentarDetalle(HttpServletRequest request, HttpServletResponse response) {
-        DAOVentas dao;
-        Ventas vent = new Ventas();
-        List<DetalleVentas> ventas;
+        DAOVenta dao;
+        Venta vent = new Venta();
+        List<DetalleVenta> ventas;
 
         if (request.getParameter("cod") != null) {
             vent.setCodigov(Integer.parseInt(request.getParameter("cod")));
 
-            dao = new DAOVentas();
+            dao = new DAOVenta();
             try {
                 ventas = dao.listarDetalles(vent);
                 if (ventas != null) {
@@ -112,8 +112,8 @@ public class srvReportes extends HttpServlet {
     }
 
     private void listarVentas(HttpServletRequest request, HttpServletResponse response) {
-        DAOVentas dao = new DAOVentas();
-        List<Ventas> ven = null;
+        DAOVenta dao = new DAOVenta();
+        List<Venta> ven = null;
 
         try {
             ven = dao.listar();

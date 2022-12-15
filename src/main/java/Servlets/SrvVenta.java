@@ -1,13 +1,15 @@
 package Servlets;
 
-import DAO.DAOClientes;
-import DAO.DAOVentas;
-import Entidades.Clientes;
+import DAO.DAOCliente;
+import DAO.DAOTipo_Pago;
+import DAO.DAOVenta;
+import Entidades.Cliente;
 import Entidades.DetalleVentaAux;
-import Entidades.DetalleVentas;
-import Entidades.Productos;
-import Entidades.Ventas;
-import Entidades.VentasAux;
+import Entidades.DetalleVenta;
+import Entidades.Producto;
+import Entidades.Tipo_Pago;
+import Entidades.Venta;
+import Entidades.VentaAux;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
@@ -26,9 +28,9 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class srvVentas extends HttpServlet {
-    
-    private final DAOVentas daov = new DAOVentas();
+public class SrvVenta extends HttpServlet {
+
+    private final DAOVenta daov = new DAOVenta();
     private final Gson json = new Gson();
     private PrintWriter output = null;
 
@@ -89,69 +91,72 @@ public class srvVentas extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        
+
         response.setContentType("application/json;charset=UTF-8");
-        
+
         output = response.getWriter();
-        
+
         String action = request.getParameter("action");
-        
+
         if (action.equals("cargarDatos")) {
             cargarClientes();
         } else if (action.equals("obtenerCorrelativo")) {
             obtenerCorrelativo(request.getParameter("tipo"));
         } else if (action.equals("obtenerProducto")) {
             obtenerProducto(request.getParameter("descripcion"));
+        } else if (action.equals("cargarTipoPago")) {
+            cargarTP();
         } else if (action.equals("registrar")) {
             try {
                 registrar(request);
             } catch (Exception ex) {
-                Logger.getLogger(srvVentas.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SrvVenta.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
+
     private void registrar(HttpServletRequest request) throws Exception {
-        VentasAux aux = json.fromJson(request.getParameter("data_venta"), VentasAux.class);
-        
-        Clientes cliente = new Clientes();
+        VentaAux aux = json.fromJson(request.getParameter("data_venta"), VentaAux.class);
+
+        Cliente cliente = new Cliente();
         cliente.setCodigo(aux.getCliente());
-        
-        cliente = new DAOClientes().leer(cliente);
-        
+
+        cliente = new DAOCliente().leer(cliente);
+
         if (aux.getComprobante().equals("F") && cliente.getTipodocumento().equals("D")) {
             print_error("Cliente debe ser tipo RUC");
         }
-        
-        Ventas venta = new Ventas();
+
+        Venta venta = new Venta();
         venta.setClientes(cliente);
         venta.setTipo_documentov(aux.getComprobante());
         venta.setSeriev(aux.getSerie());
         venta.setFechav(new SimpleDateFormat("YYYY/MM/dd").format(new Date()));
-        int correlativo = daov.obtenerCorrelativo(aux.getComprobante()); 
+        int correlativo = daov.obtenerCorrelativo(aux.getComprobante());
         venta.setNumerov(String.valueOf(++correlativo));
-        
-        Type objType = new TypeToken<ArrayList<DetalleVentaAux>>(){}.getType();
+
+        Type objType = new TypeToken<ArrayList<DetalleVentaAux>>() {
+        }.getType();
         ArrayList<DetalleVentaAux> detallesaux = json.fromJson(request.getParameter("detalles"), objType);
-        
-        ArrayList<DetalleVentas> detalles = new ArrayList<>();
+
+        ArrayList<DetalleVenta> detalles = new ArrayList<>();
         boolean has_stock = true;
-        Productos producto = null;
-        
+        Producto producto = null;
+
         for (DetalleVentaAux detalle : detallesaux) {
             producto = daov.obtenerProducto(String.valueOf(detalle.getProducto()), 2);
             if (producto.getStockpro() == 0) {
                 has_stock = false;
                 break;
             }
-            
-            DetalleVentas obj = new DetalleVentas();
+
+            DetalleVenta obj = new DetalleVenta();
             obj.setCantidadventas(detalle.getCantidad());
             obj.setPrecioventaventas(detalle.getPrecio());
             obj.setProductos(producto);
             detalles.add(obj);
         }
-        
+
         if (has_stock) {
             venta.setDetalles(detalles);
             try {
@@ -161,27 +166,27 @@ public class srvVentas extends HttpServlet {
                 print_error(e.getMessage());
             }
         } else {
-            print_error("El productos "+ producto.getNombrepro() +" no cuenta con stock.");
+            print_error("El productos " + producto.getNombrepro() + " no cuenta con stock.");
         }
     }
-    
+
     private void obtenerCorrelativo(String tipo) {
         int correlativo = 0;
         try {
             correlativo = daov.obtenerCorrelativo(tipo);
-            
+
             HashMap<String, String> obj = new HashMap<>();
             obj.put("serie", tipo + "0001");
             obj.put("correlativo", "00000" + (++correlativo));
-            
+
             print_success(obj);
         } catch (Exception e) {
             print_error(e.getMessage());
         }
     }
-    
+
     private void obtenerProducto(String descripcion) {
-        Productos producto = null;
+        Producto producto = null;
         try {
             producto = daov.obtenerProducto(descripcion, 1);
             print_success(producto);
@@ -189,11 +194,11 @@ public class srvVentas extends HttpServlet {
             print_error(e.getMessage());
         }
     }
-    
+
     private void cargarClientes() {
-        DAOClientes dao = new DAOClientes();
-        List<Clientes> clientes = null;
-        
+        DAOCliente dao = new DAOCliente();
+        List<Cliente> clientes = null;
+
         try {
             clientes = dao.cargarClientesVentas();
             print_success(clientes);
@@ -202,12 +207,24 @@ public class srvVentas extends HttpServlet {
         }
     }
     
-    private void print_success(Object object) {
-        output.print("{\"estado\": true, \"data\": "+ json.toJson(object) +"}");
+     private void cargarTP() {
+        DAOTipo_Pago dao = new DAOTipo_Pago();
+        List<Tipo_Pago> tipopago=  null;
+
+        try {
+            tipopago = dao.listar();
+            print_success(tipopago);
+        } catch (Exception e) {
+            print_error(e.getMessage());
+        }
     }
-    
+
+    private void print_success(Object object) {
+        output.print("{\"estado\": true, \"data\": " + json.toJson(object) + "}");
+    }
+
     private void print_error(String mensaje) {
-        output.print("{\"estado\": false, \"msj\": \""+ mensaje +"\"}");
+        output.print("{\"estado\": false, \"msj\": \"" + mensaje + "\"}");
     }
 
     /**
@@ -223,6 +240,7 @@ public class srvVentas extends HttpServlet {
     private void presentarFormulario(HttpServletRequest request, HttpServletResponse response) {
         try {
             this.cargarClientes(request);
+            this.cargarPagos(request);
             this.getServletConfig().getServletContext().
                     getRequestDispatcher("/vistas/ventas.jsp").forward(request, response);
         } catch (Exception e) {
@@ -235,8 +253,8 @@ public class srvVentas extends HttpServlet {
     }
 
     private void cargarClientes(HttpServletRequest request) {
-        DAOClientes dao = new DAOClientes();
-        List<Clientes> cli = null;
+        DAOCliente dao = new DAOCliente();
+        List<Cliente> cli = null;
         try {
             cli = dao.listar();
             request.setAttribute("clientes", cli);
@@ -244,6 +262,20 @@ public class srvVentas extends HttpServlet {
             request.setAttribute("msje", "No se puede cargar los clientes" + e.getLocalizedMessage());
         } finally {
             cli = null;
+            dao = null;
+        }
+    }
+
+    private void cargarPagos(HttpServletRequest request) {
+        DAOTipo_Pago dao = new DAOTipo_Pago();
+        List<Tipo_Pago> tp = null;
+        try {
+            tp = dao.listar();
+            request.setAttribute("pagos", tp);
+        } catch (Exception e) {
+            request.setAttribute("msje", "No se puede cargar los pagos" + e.getLocalizedMessage());
+        } finally {
+            tp = null;
             dao = null;
         }
     }

@@ -1,17 +1,16 @@
 package Servlets;
 
-import DAO.DAOClientes;
-import Entidades.Clientes;
+import DAO.DAOProveedor;
+import Entidades.Proveedor;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "srvClientes", urlPatterns = {"/srvClientes"})
-public class srvClientes extends HttpServlet {
+public class SrvProveedor extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,20 +26,19 @@ public class srvClientes extends HttpServlet {
                         presentarFormulario(request, response);
                         break;
                     case "guardar":
-                        guardarClientes(request, response);
+                        guardarProveedores(request, response);
                         break;
                     case "editar":
-                        presentarClientes(request, response);
+                        presentarProveedores(request, response);
                         break;
                     case "actualizar":
-                        actualizarClientes(request, response);
+                        actualizarProveedores(request, response);
                         break;
                     case "eliminar":
-                        eliminarClientes(request, response);
-                        break;
+                        eliminarProveedores(request, response);
                 }
             } else {
-                this.listarClientes(request, response);
+                this.listarProveedores(request, response);
             }
         } catch (Exception e) {
             try {
@@ -93,36 +91,41 @@ public class srvClientes extends HttpServlet {
     private void presentarFormulario(HttpServletRequest request, HttpServletResponse response) {
         try {
             this.getServletConfig().getServletContext().
-                    getRequestDispatcher("/vistas/registrarClientes.jsp").forward(request, response);
+                    getRequestDispatcher("/vistas/registrarProveedores.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("msje", "No se pudo realizar la operacion");
         }
     }
 
-    private void guardarClientes(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        DAOClientes dao;
-        Clientes cli = null;
+    private void guardarProveedores(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        DAOProveedor dao;
+        Proveedor prove = null;
 
-        if (request.getParameter("txtNombreCliente") != null) {
+        if (request.getParameter("txtNombreProveedor") != null) {
 
-            cli = new Clientes();
-            cli.setNombre(request.getParameter("txtNombreCliente"));
-            cli.setApellido(request.getParameter("txtApellidoCliente"));
-            cli.setDireccion(request.getParameter("txtDireccion"));
-            cli.setDni(request.getParameter("txtDNI"));
-            
+            prove = new Proveedor();
+            prove.setRucProvee(request.getParameter("txtRuc"));
+            prove.setNombreProve(request.getParameter("txtNombreProveedor"));
+            prove.setTelefonoProve(request.getParameter("txtTelefono"));
+            if (request.getParameter("chkEstado") != null) {
+                //llega parámetro
+                prove.setEstadoProve(true);
+            } else {
+                prove.setEstadoProve(false);
+            }
+
             //VERIFICA EL ESTADO DE LA CATEGORIA SI ESTA ACTIVA O NO
-            dao = new DAOClientes();
+            dao = new DAOProveedor();
             //INSTANCIA EL OBJETO DAOCATEGORIA PARA PROCEDER CON EL REGISTRO
             try {
-                dao.registrar(cli);//LLAMA AL METODO REGISTRAR QUE ESTA EN EL 
+                dao.registrar(prove);//LLAMA AL METODO REGISTRAR QUE ESTA EN EL 
                 //DAOCATEGORIA PARA INSERTAR EL REGISTRO EN LA BASE DE DATOS.
-                response.sendRedirect("srvClientes");
+                response.sendRedirect("srvProveedores");
                 //UNA VEZ REGISTRADO REDIRECCIONA LA PAGINA DE CATEGORIA(MUESTRA EL LISTADO)
             } catch (Exception e) {
-                request.setAttribute("msje", "No se pudo registrar el cliente" + e.getLocalizedMessage());
+                request.setAttribute("msje", "No se pudo registrar el Proveedor" + e.getLocalizedMessage());
                 //MENSAJE EN CASO DE QUE ALGO PASE AL MOMENTO DE REGISTRAR
-                request.setAttribute("cliente", cli);
+                request.setAttribute("proveedores", prove);
                 //ATRIBUTO CAT PARA ACCEDER A LA COLECCION DE CATEGORIAS
                 request.setAttribute("accion", "guardar");
                 response.sendRedirect("error404.jsp");
@@ -132,53 +135,62 @@ public class srvClientes extends HttpServlet {
         }
     }
 
-    private void presentarClientes(HttpServletRequest request, HttpServletResponse response) {
-        DAOClientes dao;
-        Clientes cli;
+    private void presentarProveedores(HttpServletRequest request, HttpServletResponse response) {
+
+        DAOProveedor dao;
+        Proveedor prove;
 
         if (request.getParameter("cod") != null) {
-            cli = new Clientes();
-            cli.setCodigo(Integer.parseInt(request.getParameter("cod")));
+            prove = new Proveedor();
+            prove.setCodigoProve(Integer.parseInt(request.getParameter("cod")));
 
-             dao = new DAOClientes();
+            dao = new DAOProveedor();
             try {
-                cli = dao.leer(cli);
-                if (cli != null) {
-                    request.setAttribute("cliente", cli);
+                prove = dao.leer(prove);
+                if (prove != null) {
+                    request.setAttribute("proveedores", prove);
                 } else {
-                    request.setAttribute("msje", "No se encontró el cliente");
+                    request.setAttribute("msje", "No se encontró el proveedor");
                 }
             } catch (Exception e) {
-                request.setAttribute("msje", "No se pudo acceder a la base de datos" + e.getMessage());
+                request.setAttribute("msje", "No se pudo acceder a la base de datos");
             }
         } else {
             request.setAttribute("msje", "No se tiene el parámetro necesario");
         }
         request.setAttribute("accion", "actualizar");
         this.presentarFormulario(request, response);
+    
     }
 
-    private void actualizarClientes(HttpServletRequest request, HttpServletResponse response) {
-        DAOClientes daoCli;
-        Clientes cli;
+    
+    private void actualizarProveedores(HttpServletRequest request, HttpServletResponse response) {
+        DAOProveedor daoProve;
+        Proveedor prove;
 
         if (request.getParameter("hCodigo") != null
-                && request.getParameter("txtNombreCliente") != null) {
-            cli = new Clientes();
-            cli.setCodigo(Integer.parseInt(request.getParameter("hCodigo")));
-            cli.setNombre(request.getParameter("txtNombreCliente"));
-            cli.setApellido(request.getParameter("txtApellidoCliente"));
-            cli.setDireccion(request.getParameter("txtDireccion"));
-            cli.setDni(request.getParameter("txtDNI"));
+                && request.getParameter("txtNombreProveedor") != null) {
+            prove = new Proveedor();
+            prove.setCodigoProve(Integer.parseInt(request.getParameter("hCodigo")));
+            prove.setRucProvee(request.getParameter("txtRuc"));
+            prove.setNombreProve(request.getParameter("txtNombreProveedor"));
+            prove.setTelefonoProve(request.getParameter("txtTelefono"));
             
-            daoCli = new DAOClientes();
+            
+            
+            if (request.getParameter("chkEstado") != null) {
+                prove.setEstadoProve(true);
+            } else {
+                prove.setEstadoProve(false);
+            }
+            daoProve = new DAOProveedor();
             try {
-                daoCli.actualizar(cli);
-                response.sendRedirect("srvClientes");
+                daoProve.actualizar(prove);
+                response.sendRedirect("srvProveedores");
             } catch (Exception e) {
                 request.setAttribute("msje",
-                        "No se pudo actualizar los Clientes" + e.getMessage());
-                request.setAttribute("cliente", cli);
+                        "No se pudo actualizar los proveedores" + e.getMessage());
+                request.setAttribute("proveedores", prove);
                 request.setAttribute("accion", "actualizar");
                 this.presentarFormulario(request, response);
             } finally {
@@ -189,42 +201,42 @@ public class srvClientes extends HttpServlet {
         }
     }
 
-    private void eliminarClientes(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        DAOClientes daocli;
-        Clientes cli;
+    private void eliminarProveedores(HttpServletRequest request, HttpServletResponse response)throws Exception{
+        DAOProveedor daoprove;
+        Proveedor prove;
         if (request.getParameter("cod") != null) {
-            cli = new Clientes();
-            cli.setCodigo(Integer.parseInt(request.getParameter("cod")));
-            daocli = new DAOClientes();
+            prove = new Proveedor();
+            prove.setCodigoProve(Integer.parseInt(request.getParameter("cod")));
+            daoprove = new DAOProveedor();
             try {
-                daocli.eliminarClientes(cli);
-                response.sendRedirect("srvClientes");
+                daoprove.eliminarProveedores(prove);
+                response.sendRedirect("srvProveedores");
             } catch (Exception e) {
-                request.setAttribute("msje", "No se pudo eliminar el cliente " + e.getMessage());
+                request.setAttribute("msje", "No se pudo eliminar el proveedor " + e.getMessage());
                 request.getRequestDispatcher("mensaje.jsp").forward(request, response);
             }finally{
-                daocli = null;
+                daoprove = null;
             }
         }
     }
 
-    private void listarClientes(HttpServletRequest request, HttpServletResponse response) {
-        DAOClientes dao = new DAOClientes();
-        List<Clientes> clientes = null;
+    private void listarProveedores(HttpServletRequest request, HttpServletResponse response) {
+        DAOProveedor dao = new DAOProveedor();
+        List<Proveedor> proveedores = null;
 
         try {
-            clientes = dao.listar();
-            request.setAttribute("clientes", clientes);
+            proveedores = dao.listar();
+            request.setAttribute("proveedores", proveedores);
         } catch (Exception e) {
-            request.setAttribute("msje", "No se pudo listar los clientes" + e.getMessage());
+            request.setAttribute("msje", "No se pudo listar los proveedores" + e.getMessage());
         } finally {
             dao = null;
         }
         try {
-            this.getServletConfig().getServletContext().getRequestDispatcher("/vistas/listarClientes.jsp"
+            this.getServletConfig().getServletContext().getRequestDispatcher("/vistas/listarProveedores.jsp"
             ).forward(request, response);
         } catch (Exception e) {
-            request.setAttribute("msje", "No se pudo realizar la operacion" + e.getLocalizedMessage());
+            request.setAttribute("msje", "No se pudo realizar la operacion");
         }
     }
 

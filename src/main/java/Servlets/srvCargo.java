@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class srvCargo extends HttpServlet {
+public class SrvCargo extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

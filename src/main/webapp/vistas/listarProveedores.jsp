@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-        <title>Sistema Libreria | Proveedores</title>
+        <title>Sistema Rosvil | Proveedores</title>
 
         <!-- Font Awesome Icons -->
         <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -76,7 +76,7 @@
                 <a href="index3.html" class="brand-link">
                     <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                          style="opacity: .8;">
-                    <span class="brand-text font-weight-light">Sistema Libreria</span>
+                    <span class="brand-text font-weight-light">Sistema Rosvil</span>
                 </a>
 
                 <!-- Sidebar -->
@@ -270,10 +270,10 @@
             <footer class="main-footer">
                 <!-- To the right -->
                 <div class="float-right d-none d-sm-inline">
-                    Idat-Desarrollo de Software
+                    UTP - INGENIERÍA DE SISTEMAS E INFORMÁTICA
                 </div>
                 <!-- Default to the left -->
-                <strong>Copyright &copy; 2020-2024 <a href="https://adminlte.io">Sistema Libreria</a>.</strong> Todos los derechos reservados.
+                <strong>Copyright &copy; 2022-2024 <a href="https://adminlte.io">Sistema Rosvil</a>.</strong> Todos los derechos reservados.
             </footer>
         </div>
         <!-- ./wrapper -->

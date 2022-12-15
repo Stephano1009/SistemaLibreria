@@ -1,7 +1,7 @@
 
 package Entidades;
 
-public class Clientes {
+public class Cliente {
     private int codigo;
     private String nombre;
     private String apellido;

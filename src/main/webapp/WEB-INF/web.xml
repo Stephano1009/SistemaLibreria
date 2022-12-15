@@ -2,47 +2,47 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>srvUsuario</servlet-name>
-        <servlet-class>Servlets.srvUsuario</servlet-class>
+        <servlet-class>Servlets.SrvUsuario</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>srvCategoria</servlet-name>
-        <servlet-class>Servlets.srvCategoria</servlet-class>
+        <servlet-class>Servlets.SrvCategoria</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>srvClientes</servlet-name>
-        <servlet-class>Servlets.srvClientes</servlet-class>
+        <servlet-class>Servlets.SrvCliente</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>srvCargo</servlet-name>
-        <servlet-class>Servlets.srvCargo</servlet-class>
+        <servlet-class>Servlets.SrvCargo</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>srvProductos</servlet-name>
-        <servlet-class>Servlets.srvProductos</servlet-class>
+        <servlet-class>Servlets.SrvProducto</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>srvEmpleados</servlet-name>
-        <servlet-class>Servlets.srvEmpleados</servlet-class>
+        <servlet-class>Servlets.SrvEmpleado</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>srvProveedores</servlet-name>
-        <servlet-class>Servlets.srvProveedores</servlet-class>
+        <servlet-class>Servlets.SrvProveedor</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>srvUsus</servlet-name>
-        <servlet-class>Servlets.srvUsus</servlet-class>
+        <servlet-class>Servlets.SrvUsu</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>srvTipo_Pago</servlet-name>
-        <servlet-class>Servlets.srvTipo_Pago</servlet-class>
+        <servlet-class>Servlets.SrvTipo_Pago</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>srvVentas</servlet-name>
-        <servlet-class>Servlets.srvVentas</servlet-class>
+        <servlet-class>Servlets.SrvVenta</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>srvReportes</servlet-name>
-        <servlet-class>Servlets.srvReportes</servlet-class>
+        <servlet-class>Servlets.SrvReporte</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>srvUsuario</servlet-name>

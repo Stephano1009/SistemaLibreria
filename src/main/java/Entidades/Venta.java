@@ -2,7 +2,7 @@ package Entidades;
 
 import java.util.List;
 
-public class Ventas {
+public class Venta {
 
     private int codigov;
     private String seriev;
@@ -10,11 +10,11 @@ public class Ventas {
     private String tipo_documentov;
     private String fechav;
     private Tipo_Pago tipopago;
-    private Empleados empleados;
-    private Clientes clientes;
+    private Empleado empleados;
+    private Cliente clientes;
     private boolean estado;
 
-    private List<DetalleVentas> detalles;
+    private List<DetalleVenta> detalles;
 
     public int getCodigov() {
         return codigov;
@@ -48,19 +48,19 @@ public class Ventas {
         this.tipo_documentov = tipo_documentov;
     }
 
-    public Empleados getEmpleados() {
+    public Empleado getEmpleados() {
         return empleados;
     }
 
-    public void setEmpleados(Empleados empleados) {
+    public void setEmpleados(Empleado empleados) {
         this.empleados = empleados;
     }
 
-    public Clientes getClientes() {
+    public Cliente getClientes() {
         return clientes;
     }
 
-    public void setClientes(Clientes clientes) {
+    public void setClientes(Cliente clientes) {
         this.clientes = clientes;
     }
 
@@ -88,11 +88,11 @@ public class Ventas {
         this.estado = estado;
     }
 
-    public List<DetalleVentas> getDetalles() {
+    public List<DetalleVenta> getDetalles() {
         return detalles;
     }
 
-    public void setDetalles(List<DetalleVentas> detalles) {
+    public void setDetalles(List<DetalleVenta> detalles) {
         this.detalles = detalles;
     }
     

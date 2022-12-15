@@ -1,8 +1,8 @@
 package Servlets;
 
-import DAO.DAOCargo;
+import DAO.DAOEmpleado;
 import DAO.DAOUsuario;
-import Entidades.Cargo;
+import Entidades.Empleado;
 import Entidades.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class srvUsus extends HttpServlet {
+
+public class SrvEmpleado extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -28,20 +29,19 @@ public class srvUsus extends HttpServlet {
                         presentarFormulario(request, response);
                         break;
                     case "guardar":
-                        guardarUsuario(request, response);
+                        guardarEmpleados(request, response);
                         break;
                     case "editar":
-                        presentarUsuario(request, response);
+                        presentarEmpleados(request, response);
                         break;
                     case "actualizar":
-                        actualizarUsuario(request, response);
+                        actualizarEmpleados(request, response);
                         break;
                     case "eliminar":
-                        eliminarUsuario(request, response);
-                        break;
+                        eliminarEmpleados(request, response);
                 }
             } else {
-                this.listarUsuario(request, response);
+                this.listarEmpleados(request, response);
             }
         } catch (Exception e) {
             try {
@@ -93,53 +93,57 @@ public class srvUsus extends HttpServlet {
 
     private void presentarFormulario(HttpServletRequest request, HttpServletResponse response) {
         try {
-            this.cargarCargos(request);
+            this.cargarUsuarios(request);
             this.getServletConfig().getServletContext().
-                    getRequestDispatcher("/vistas/registrarUsuarios.jsp").forward(request, response);
+                    getRequestDispatcher("/vistas/registrarEmpleados.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("msje", "No se pudo realizar la operacion");
         }
     }
-
-    private void cargarCargos(HttpServletRequest request) {
-        DAOCargo dao = new DAOCargo();
-        List<Cargo> car = null;
+    
+    private void cargarUsuarios(HttpServletRequest request) {
+        DAOUsuario dao = new DAOUsuario();
+        List<Usuario> usu = null;
         try {
-            car = dao.listar();
-            request.setAttribute("cargo", car);
+            usu = dao.listar();
+            request.setAttribute("usuarios", usu);
         } catch (Exception e) {
-            request.setAttribute("msje", "No se puede cargar los cargos" + e.getLocalizedMessage());
+            request.setAttribute("msje", "No se puede cargar los usuarios" + e.getLocalizedMessage());
         } finally {
-            car = null;
+            usu = null;
             dao = null;
         }
     }
 
-    private void guardarUsuario(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DAOUsuario dao;
-        Usuario usu = null;
-        Cargo car = new Cargo();
-
-        if (request.getParameter("txtNombreUsuario") != null) {
-            usu = new Usuario();
-            usu.setUsuario(request.getParameter("txtNombreUsuario"));
-            usu.setClave(request.getParameter("txtClaveUsuario"));
-            car.setCodigo(Integer.parseInt(request.getParameter("cboCargo")));
-            usu.setCargo(car);
-
+    private void guardarEmpleados(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        DAOEmpleado dao;
+        Empleado emp = null;
+        
+        Usuario usu = new Usuario();
+        if (request.getParameter("txtNombreEmpleado") != null) {
+            emp = new Empleado();
+            emp.setNombreemp(request.getParameter("txtNombreEmpleado"));
+            emp.setApellidoemp(request.getParameter("txtApellidoEmpleado"));
+            emp.setDniemp(request.getParameter("txtDNI"));
+            emp.setDireccionemp(request.getParameter("txtDireccion"));
+            emp.setTelefonoemp(request.getParameter("txtTelefono"));
+            emp.setCorreoemp(request.getParameter("txtCorreo"));
+            usu.setCodigo(Integer.parseInt(request.getParameter("cboUsuario")));
+            emp.setUsuario(usu);
+            
             if (request.getParameter("chkEstado") != null) {
                 //llega parámetro
-                usu.setEstado(true);
+                emp.setEstadoemp(true);
             } else {
-                usu.setEstado(false);
+                emp.setEstadoemp(false);
             }
-            dao = new DAOUsuario();
+            dao = new DAOEmpleado();
             try {
-                dao.registrar(usu);//LLAMA AL METODO REGISTRAR QUE ESTA EN EL 
-                response.sendRedirect("srvUsus");
+                dao.registrar(emp);//LLAMA AL METODO REGISTRAR QUE ESTA EN EL 
+                response.sendRedirect("srvEmpleados");
             } catch (Exception e) {
-                request.setAttribute("msje", "No se pudo registrar el usuario" + e.getLocalizedMessage());
-                request.setAttribute("users", usu);
+                request.setAttribute("msje", "No se pudo registrar el empleados" + e.getLocalizedMessage());
+                request.setAttribute("empleados", emp);
                 request.setAttribute("accion", "guardar");
                 response.sendRedirect("error404.jsp");
             } finally {
@@ -147,21 +151,21 @@ public class srvUsus extends HttpServlet {
         }
     }
 
-    private void presentarUsuario(HttpServletRequest request, HttpServletResponse response) {
-        DAOUsuario dao;
-        Usuario usu;
+    private void presentarEmpleados(HttpServletRequest request, HttpServletResponse response) {
+        DAOEmpleado dao;
+        Empleado empl;
 
         if (request.getParameter("cod") != null) {
-            usu = new Usuario();
-            usu.setCodigo(Integer.parseInt(request.getParameter("cod")));
+            empl = new Empleado();
+            empl.setCodigoemp(Integer.parseInt(request.getParameter("cod")));
 
-            dao = new DAOUsuario();
+             dao = new DAOEmpleado();
             try {
-                usu = dao.leer(usu);
-                if (usu != null) {
-                    request.setAttribute("users", usu);
+                empl = dao.leer(empl);
+                if (empl != null) {
+                    request.setAttribute("empleados", empl);
                 } else {
-                    request.setAttribute("msje", "No se encontró el usuario");
+                    request.setAttribute("msje", "No se encontró el empleado");
                 }
             } catch (Exception e) {
                 request.setAttribute("msje", "No se pudo acceder a la base de datos" + e.getMessage());
@@ -173,72 +177,78 @@ public class srvUsus extends HttpServlet {
         this.presentarFormulario(request, response);
     }
 
-    private void actualizarUsuario(HttpServletRequest request, HttpServletResponse response) {
-        DAOUsuario daoUsu;
-        Usuario Usu;
+    private void actualizarEmpleados(HttpServletRequest request, HttpServletResponse response) {
+        DAOEmpleado daoempl;
+        Empleado empl;
 
         if (request.getParameter("hCodigo") != null
                 && request.getParameter("txtNombreCliente") != null) {
-            Usu = new Usuario();
-            Usu.setCodigo(Integer.parseInt(request.getParameter("hCodigo")));
-            Usu.setUsuario(request.getParameter("txtNombreUsuario"));
-            Usu.setClave(request.getParameter("txtClaveUsuario"));
+            empl = new Empleado();
+            empl.setCodigoemp(Integer.parseInt(request.getParameter("hCodigo")));
+            empl.setNombreemp(request.getParameter("txtNombreEmpleado"));
+            empl.setApellidoemp(request.getParameter("txtApellidoEmpleado"));
+            empl.setDniemp(request.getParameter("txtDNI"));
+            empl.setDireccionemp(request.getParameter("txtDireccion"));
+            empl.setTelefonoemp(request.getParameter("txtTelefono"));
+            empl.setCorreoemp(request.getParameter("txtCorreo")); 
+            
             if (request.getParameter("chkEstado") != null) {
-                Usu.setEstado(true);
+                empl.setEstadoemp(true);
             } else {
-                Usu.setEstado(false);
+                empl.setEstadoemp(false);
             }
-
-            daoUsu = new DAOUsuario();
+            
+            daoempl = new DAOEmpleado();
             try {
-                daoUsu.actualizar(Usu);
-                response.sendRedirect("srvUsuario");
+                daoempl.actualizar(empl);
+                response.sendRedirect("srvEmpleados");
             } catch (Exception e) {
                 request.setAttribute("msje",
-                        "No se pudo actualizar los Usuarios" + e.getMessage());
-                request.setAttribute("users", Usu);
+                        "No se pudo actualizar los Empleados" + e.getMessage());
+                request.setAttribute("empleado", empl);
                 request.setAttribute("accion", "actualizar");
                 this.presentarFormulario(request, response);
             } finally {
             }
-        } else {
-            request.setAttribute("msje", "Rellene obligatoriamente los campos");
+        }
+        else{
+            request.setAttribute("msje","Rellene obligatoriamente los campos");
         }
     }
 
-    private void eliminarUsuario(HttpServletRequest request, HttpServletResponse response)throws Exception{
-        DAOUsuario daousu;
-        Usuario usu;
+    private void eliminarEmpleados(HttpServletRequest request, HttpServletResponse response) throws Exception{
+       DAOEmpleado daoempl;
+        Empleado empl;
         if (request.getParameter("cod") != null) {
-            usu = new Usuario();
-            usu.setCodigo(Integer.parseInt(request.getParameter("cod")));
-            daousu = new DAOUsuario();
+            empl = new Empleado();
+            empl.setCodigoemp(Integer.parseInt(request.getParameter("cod")));
+            daoempl = new DAOEmpleado();
             try {
-                daousu.eliminarUsuario(usu);
-                response.sendRedirect("srvUsus");
+                daoempl.eliminarEmpleados(empl);
+                response.sendRedirect("srvEmpleados");
             } catch (Exception e) {
-                request.setAttribute("msje", "No se pudo eliminar el usuario " + e.getMessage());
+                request.setAttribute("msje", "No se pudo eliminar el empleado " + e.getMessage());
                 request.getRequestDispatcher("mensaje.jsp").forward(request, response);
             }finally{
-                daousu = null;
+                daoempl = null;
             }
         }
     }
 
-    private void listarUsuario(HttpServletRequest request, HttpServletResponse response) {
-        DAOUsuario dao = new DAOUsuario();
-        List<Usuario> usu = null;
+    private void listarEmpleados(HttpServletRequest request, HttpServletResponse response) {
+        DAOEmpleado dao = new DAOEmpleado();
+        List<Empleado> empleados = null;
 
         try {
-            usu = dao.listar();
-            request.setAttribute("usuarios", usu);
+            empleados = dao.listar();
+            request.setAttribute("empleado", empleados);
         } catch (Exception e) {
-            request.setAttribute("msje", "No se pudo listar los usuario" + e.getLocalizedMessage());
+            request.setAttribute("msje", "No se pudo listar los empleados");
         } finally {
             dao = null;
         }
         try {
-            this.getServletConfig().getServletContext().getRequestDispatcher("/vistas/listarUsuarios.jsp"
+            this.getServletConfig().getServletContext().getRequestDispatcher("/vistas/listarEmpleados.jsp"
             ).forward(request, response);
         } catch (Exception e) {
             request.setAttribute("msje", "No se pudo realizar la operacion");

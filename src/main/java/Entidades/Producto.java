@@ -1,7 +1,7 @@
 
 package Entidades;
 
-public class Productos {
+public class Producto {
     private int codigopro;
     private String nombrepro;
     private String descripcionpro;
@@ -10,7 +10,7 @@ public class Productos {
     private boolean estadopro;
     private int stockpro;
     private Categoria categoriapro;
-    private Proveedores proveedorpro;
+    private Proveedor proveedorpro;
 
     public int getCodigopro() {
         return codigopro;
@@ -77,11 +77,11 @@ public class Productos {
         this.categoriapro = categoriapro;
     }
 
-    public Proveedores getProveedorpro() {
+    public Proveedor getProveedorpro() {
         return proveedorpro;
     }
 
-    public void setProveedorpro(Proveedores proveedorpro) {
+    public void setProveedorpro(Proveedor proveedorpro) {
         this.proveedorpro = proveedorpro;
     }
 

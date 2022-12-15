@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-        <title>Sistema Libreria | Ventas</title>
+        <title>Sistema Rosvil | Ventas</title>
 
         <!-- Font Awesome Icons -->
         <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -76,7 +76,7 @@
                 <a href="index3.html" class="brand-link">
                     <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                          style="opacity: .8;">
-                    <span class="brand-text font-weight-light">Sistema Libreria</span>
+                    <span class="brand-text font-weight-light">Sistema Rosvil</span>
                 </a>
 
                 <!-- Sidebar -->
@@ -225,7 +225,7 @@
                                         <input type="hidden" name="hCodigo" value="">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Cliente</label>
                                                         <select class="form-control" id="cbocliente" required>
@@ -233,7 +233,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label>Tipo Comprobante</label>
                                                         <select class="form-control" id="cbocomprobante" required>
@@ -243,19 +243,28 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Forma Pago</label>
+                                                        <select class="form-control" id="cbotipopago" required>
+                                                            <option value="0">Seleccione forma de pago</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label for="txtserie">N° Serie</label>
                                                         <input type="text" class="form-control" id="txtserie" readonly required name="txtserie">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label for="txtcorrelativo">N° Correlativo</label>
                                                         <input type="text" name="txtcorrelativo" readonly required class="form-control" id="txtcorrelativo">
                                                     </div>
                                                 </div>
                                             </div>
+                                           
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div>
@@ -351,10 +360,10 @@
             <footer class="main-footer">
                 <!-- To the right -->
                 <div class="float-right d-none d-sm-inline">
-                    Idat-Desarrollo de Software
+                    UTP - INGENIERÍA DE SISTEMAS E INFORMÁTICA
                 </div>
                 <!-- Default to the left -->
-                <strong>Copyright &copy; 2020-2024 <a href="https://adminlte.io">Sistema Libreria</a>.</strong> Todos los derechos reservados.
+                <strong>Copyright &copy; 2022-2024 <a href="https://adminlte.io">Sistema Rosvil</a>.</strong> Todos los derechos reservados.
             </footer>
         </div>
         <!-- ./wrapper -->

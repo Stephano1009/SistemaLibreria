@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-        <title>Sistema Libreria | Usuarios</title>
+        <title>Sistema Rosvil | Usuarios</title>
 
         <!-- Font Awesome Icons -->
         <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -272,7 +272,7 @@
                     Idat-Desarrollo de Software
                 </div>
                 <!-- Default to the left -->
-                <strong>Copyright &copy; 2020-2024 <a href="https://adminlte.io">Sistema Libreria</a>.</strong> Todos los derechos reservados.
+                <strong>Copyright &copy; 2022-2024 <a href="https://adminlte.io">Sistema Libreria</a>.</strong> Todos los derechos reservados.
             </footer>
         </div>
         <!-- ./wrapper -->

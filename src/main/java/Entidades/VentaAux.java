@@ -1,6 +1,6 @@
 package Entidades;
 
-public class VentasAux {
+public class VentaAux {
     
     private int cliente;
     private String comprobante;

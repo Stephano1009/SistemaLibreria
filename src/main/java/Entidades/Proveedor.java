@@ -2,7 +2,7 @@
 package Entidades;
 
 
-public class Proveedores {
+public class Proveedor {
     private int codigoProve;
     private String rucProvee;
     private String nombreProve;

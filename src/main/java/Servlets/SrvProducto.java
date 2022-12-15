@@ -1,11 +1,11 @@
 package Servlets;
 
 import DAO.DAOCategoria;
-import DAO.DAOProductos;
-import DAO.DAOProveedores;
+import DAO.DAOProducto;
+import DAO.DAOProveedor;
 import Entidades.Categoria;
-import Entidades.Productos;
-import Entidades.Proveedores;
+import Entidades.Producto;
+import Entidades.Proveedor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class srvProductos extends HttpServlet {
+public class SrvProducto extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -127,8 +127,8 @@ public class srvProductos extends HttpServlet {
     }
 
     private void cargarProveedores(HttpServletRequest request) {
-        DAOProveedores dao = new DAOProveedores();
-        List<Proveedores> prov = null;
+        DAOProveedor dao = new DAOProveedor();
+        List<Proveedor> prov = null;
         try {
             prov = dao.listar();
             request.setAttribute("proveedores", prov);
@@ -141,12 +141,12 @@ public class srvProductos extends HttpServlet {
     }
 
     private void guardarProductos(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DAOProductos dao;
-        Productos pro = null;
-        Proveedores prov = new Proveedores();
+        DAOProducto dao;
+        Producto pro = null;
+        Proveedor prov = new Proveedor();
         Categoria cat = new Categoria();
         if (request.getParameter("txtNombreProducto") != null) {
-            pro = new Productos();
+            pro = new Producto();
             pro.setNombrepro(request.getParameter("txtNombreProducto"));
             pro.setDescripcionpro(request.getParameter("txtDescripcion"));
             pro.setContenidopro(request.getParameter("txtContenido"));
@@ -164,7 +164,7 @@ public class srvProductos extends HttpServlet {
             } else {
                 pro.setEstadopro(false);
             }
-            dao = new DAOProductos();
+            dao = new DAOProducto();
             try {
                 dao.registrar(pro);//LLAMA AL METODO REGISTRAR QUE ESTA EN EL 
                 response.sendRedirect("srvProductos");
@@ -179,14 +179,14 @@ public class srvProductos extends HttpServlet {
     }
 
     private void presentarProductos(HttpServletRequest request, HttpServletResponse response) {
-        DAOProductos dao;
-        Productos pro;
+        DAOProducto dao;
+        Producto pro;
 
         if (request.getParameter("cod") != null) {
-            pro = new Productos();
+            pro = new Producto();
             pro.setCodigopro(Integer.parseInt(request.getParameter("cod")));
 
-             dao = new DAOProductos();
+             dao = new DAOProducto();
             try {
                 pro = dao.leer(pro);
                 if (pro != null) {
@@ -205,14 +205,14 @@ public class srvProductos extends HttpServlet {
     }
 
     private void actualizarProductos(HttpServletRequest request, HttpServletResponse response) {
-       DAOProductos daoPro;
-        Productos pro;
+       DAOProducto daoPro;
+        Producto pro;
         Categoria cat = new Categoria();
-        Proveedores prov = new Proveedores();
+        Proveedor prov = new Proveedor();
 
         if (request.getParameter("hCodigo") != null
                 && request.getParameter("txtNombreProducto") != null) {
-            pro = new Productos();
+            pro = new Producto();
             pro.setCodigopro(Integer.parseInt(request.getParameter("hCodigo")));
             pro.setNombrepro(request.getParameter("txtNombreProducto"));
             pro.setDescripcionpro(request.getParameter("txtDescripcion"));
@@ -229,7 +229,7 @@ public class srvProductos extends HttpServlet {
             } else {
                 pro.setEstadopro(false);
             }
-            daoPro = new DAOProductos();
+            daoPro = new DAOProducto();
             try {
                 daoPro.actualizar(pro);
                 response.sendRedirect("srvProductos");
@@ -248,12 +248,12 @@ public class srvProductos extends HttpServlet {
     }
 
     private void eliminarProductos(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        DAOProductos daopro;
-        Productos pro;
+        DAOProducto daopro;
+        Producto pro;
         if (request.getParameter("cod") != null) {
-            pro = new Productos();
+            pro = new Producto();
             pro.setCodigopro(Integer.parseInt(request.getParameter("cod")));
-            daopro = new DAOProductos();
+            daopro = new DAOProducto();
             try {
                 daopro.eliminarProductos(pro);
                 response.sendRedirect("srvProductos");
@@ -267,8 +267,8 @@ public class srvProductos extends HttpServlet {
     }
 
     private void listarProductos(HttpServletRequest request, HttpServletResponse response) {
-        DAOProductos dao = new DAOProductos();
-        List<Productos> pro = null;
+        DAOProducto dao = new DAOProducto();
+        List<Producto> pro = null;
 
         try {
             pro = dao.listar();

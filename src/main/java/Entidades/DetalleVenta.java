@@ -1,12 +1,12 @@
 
 package Entidades;
 
-public class DetalleVentas {
+public class DetalleVenta {
     private int codigoventas;
     private int cantidadventas;
     private double Precioventaventas;
-    private Ventas venta;
-    private Productos productos;
+    private Venta venta;
+    private Producto productos;
     private double monto;
 
     public int getCodigoventas() {
@@ -33,19 +33,19 @@ public class DetalleVentas {
         Precioventaventas = precioventaventas;
     }
 
-    public Ventas getVenta() {
+    public Venta getVenta() {
         return venta;
     }
 
-    public void setVenta(Ventas venta) {
+    public void setVenta(Venta venta) {
         this.venta = venta;
     }
 
-    public Productos getProductos() {
+    public Producto getProductos() {
         return productos;
     }
 
-    public void setProductos(Productos productos) {
+    public void setProductos(Producto productos) {
         this.productos = productos;
     }
 

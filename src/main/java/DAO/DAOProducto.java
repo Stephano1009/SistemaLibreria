@@ -2,24 +2,24 @@ package DAO;
 
 import Conexion.Conexion;
 import Entidades.Categoria;
-import Entidades.Productos;
-import Entidades.Proveedores;
+import Entidades.Producto;
+import Entidades.Proveedor;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAOProductos extends Conexion {
+public class DAOProducto extends Conexion {
 
-    public List<Productos> listar() throws Exception {
-        List<Productos> Productos;
-        Productos pro;
+    public List<Producto> listar() throws Exception {
+        List<Producto> Productos;
+        Producto pro;
         Categoria cate;
-        Proveedores prov;
+        Proveedor prov;
         ResultSet rs = null;
         String sql = "select p.ID_PRODUCTO, p.NOMBRE_PRODUCTO, P.STOCK, P.ESTADO, P.DESCRIPCION_PRODUCTO,P.CONTENIDO, P.PRECIO, "
                 + "c.NOMBRE_CATEGORIA , PRO.NOMBRE_PROVEEDOR "
-                + "From Productos P INNER JOIN CATEGORIAS C "
-                + "on p.ID_CATEGORIA = c.ID_CATEGORIA INNER JOIN PROVEEDORES PRO "
+                + "From Producto P INNER JOIN CATEGORIA C "
+                + "on p.ID_CATEGORIA = c.ID_CATEGORIA INNER JOIN PROVEEDOR PRO "
                 + "ON PRO.ID_PROVEEDOR = P.ID_PROVEEDOR "
                 + "order by p.NOMBRE_PRODUCTO ";
 
@@ -28,7 +28,7 @@ public class DAOProductos extends Conexion {
             rs = this.ejecutarOrdenDatos(sql);
             Productos = new ArrayList<>();
             while (rs.next() == true) {
-                pro = new Productos();
+                pro = new Producto();
                 pro.setCodigopro(rs.getInt("ID_PRODUCTO"));
                 pro.setNombrepro(rs.getString("NOMBRE_PRODUCTO"));
                 pro.setStockpro(rs.getInt("STOCK"));
@@ -39,7 +39,7 @@ public class DAOProductos extends Conexion {
                 cate = new Categoria();
                 cate.setCategoria(rs.getString("NOMBRE_CATEGORIA"));
                 pro.setCategoriapro(cate);
-                prov = new Proveedores();
+                prov = new Proveedor();
                 prov.setNombreProve(rs.getString("NOMBRE_PROVEEDOR"));
                 pro.setProveedorpro(prov);
                 Productos.add(pro);
@@ -50,8 +50,8 @@ public class DAOProductos extends Conexion {
         return Productos;
     }
 
-    public void registrar(Productos productos) throws Exception {
-        String sql = "INSERT INTO Productos(NOMBRE_PRODUCTO, DESCRIPCION_PRODUCTO, CONTENIDO, PRECIO, STOCK, ESTADO, "
+    public void registrar(Producto productos) throws Exception {
+        String sql = "INSERT INTO Producto(NOMBRE_PRODUCTO, DESCRIPCION_PRODUCTO, CONTENIDO, PRECIO, STOCK, ESTADO, "
                 + "ID_CATEGORIA, ID_PROVEEDOR)"
                 + "VALUES( '" + productos.getNombrepro() + "','" + productos.getDescripcionpro() + "', '"
                 + productos.getContenidopro() + "', " + productos.getPreciopro() + ", "
@@ -67,19 +67,19 @@ public class DAOProductos extends Conexion {
         }
     }
 
-    public Productos leer(Productos productos) throws Exception {
-        Productos pro = null;
+    public Producto leer(Producto productos) throws Exception {
+        Producto pro = null;
         Categoria cat;
-        Proveedores prove;
+        Proveedor prove;
         ResultSet rs = null;
         String sql = "SELECT p.ID_PRODUCTO, p.NOMBRE_PRODUCTO, p.DESCRIPCION_PRODUCTO, p.CONTENIDO, p.PRECIO, p.ESTADO, "
-                + "p.STOCK, p.ID_CATEGORIA, p.ID_PROVEEDOR FROM Productos p WHERE p.ID_PRODUCTO =  " + productos.getCodigopro();
+                + "p.STOCK, p.ID_CATEGORIA, p.ID_PROVEEDOR FROM Producto p WHERE p.ID_PRODUCTO =  " + productos.getCodigopro();
 
         try {
             this.conectar(false);
             rs = this.ejecutarOrdenDatos(sql);
             if (rs.next() == true) {
-                pro = new Productos();
+                pro = new Producto();
                 pro.setCodigopro(productos.getCodigopro());
                 pro.setNombrepro(rs.getString("NOMBRE_PRODUCTO"));
                 pro.setDescripcionpro(rs.getString("DESCRIPCION_PRODUCTO"));
@@ -90,7 +90,7 @@ public class DAOProductos extends Conexion {
                 cat = new Categoria();
                 cat.setCodigo(rs.getInt("ID_CATEGORIA"));
                 pro.setCategoriapro(cat);
-                prove = new Proveedores();
+                prove = new Proveedor();
                 prove.setCodigoProve(rs.getInt("ID_PROVEEDOR"));
                 pro.setProveedorpro(prove);
 
@@ -101,10 +101,10 @@ public class DAOProductos extends Conexion {
         return pro;
     }
 
-    public void actualizar(Productos productos) throws Exception {
+    public void actualizar(Producto productos) throws Exception {
         String sql;
 
-        sql = "UPDATE Productos SET NOMBRE_PRODUCTO = '" + productos.getNombrepro()
+        sql = "UPDATE Producto SET NOMBRE_PRODUCTO = '" + productos.getNombrepro()
                 + "', DESCRIPCION_PRODUCTO = '" + productos.getDescripcionpro()
                 + "', CONTENIDO = '" + productos.getContenidopro()
                 + "', PRECIO = " + productos.getPreciopro()
@@ -122,8 +122,8 @@ public class DAOProductos extends Conexion {
         }
     }
 
-    public void eliminarProductos(Productos pro) throws Exception {
-        String sql = "DELETE FROM Productos WHERE ID_PRODUCTO = " + pro.getCodigopro();
+    public void eliminarProductos(Producto pro) throws Exception {
+        String sql = "DELETE FROM Producto WHERE ID_PRODUCTO = " + pro.getCodigopro();
         try {
             this.conectar(false);
             this.ejecutarOrden(sql);

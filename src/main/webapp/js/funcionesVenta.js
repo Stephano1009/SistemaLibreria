@@ -207,6 +207,29 @@ $(function() {
         });
     };
     
+    function cargarPagos() {
+        $.ajax({
+            type: 'POST',
+            url: "srvVentas",
+            data: {
+              action: 'cargarTipoPago'  
+            },
+            dataType: 'json',
+            async: true,
+            success: function (data) {
+                var response = data;
+                if (response.estado) {
+                    var data = response.data, 
+                            template = '';
+                    for (var i = 0; i < data.length; i++) {
+                        template += '<option value="'+ data[i].codigopag +'">'+ data[i].nombretipopag +'</option>';
+                    }
+                    $('#cbotipopago').append(template);
+                }
+            }
+        });
+    };
+    
     function registrarVenta(data, detalles) {
         $.ajax({
             type: 'POST',
@@ -232,4 +255,5 @@ $(function() {
     };
     
     cargarDatos();
+    cargarPagos();
 });
