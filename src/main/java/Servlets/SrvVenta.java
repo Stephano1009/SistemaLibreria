@@ -27,7 +27,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.annotation.WebServlet;
 
+@WebServlet(name = "SrvVenta", urlPatterns = {"/srvVenta"})
 public class SrvVenta extends HttpServlet {
 
     private final DAOVenta daov = new DAOVenta();
@@ -120,6 +122,9 @@ public class SrvVenta extends HttpServlet {
 
         Cliente cliente = new Cliente();
         cliente.setCodigo(aux.getCliente());
+        
+        Tipo_Pago tipopago = new Tipo_Pago();
+        tipopago.setCodigopag(aux.getTipopago());
 
         cliente = new DAOCliente().leer(cliente);
 
@@ -129,6 +134,7 @@ public class SrvVenta extends HttpServlet {
 
         Venta venta = new Venta();
         venta.setClientes(cliente);
+        venta.setTipopago(tipopago);
         venta.setTipo_documentov(aux.getComprobante());
         venta.setSeriev(aux.getSerie());
         venta.setFechav(new SimpleDateFormat("YYYY/MM/dd").format(new Date()));

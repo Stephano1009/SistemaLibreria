@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "srvClientes", urlPatterns = {"/srvClientes"})
+@WebServlet(name = "SrvCliente", urlPatterns = {"/srvClientes"})
 public class SrvCliente extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

@@ -168,13 +168,13 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="srvVentas" class="nav-link">
+                                        <a href="srvVenta" class="nav-link">
                                             <i class="fas fa-cart-arrow-down nav-icon"></i>
                                             <p>Nueva Venta</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="srvReportes" class="nav-link active">
+                                        <a href="srvReporte" class="nav-link active">
                                             <i class="fas fa-chart-pie nav-icon"></i>
                                             <p>Reportes</p>
                                         </a>
@@ -243,7 +243,7 @@
                                                         <td class="text-center"><span class="badge bg-red active">Venta Inactiva</span></td> 
                                                     </c:if>
                                                     <td class="text-center">                                                     
-                                                        <a href="<c:url value="srvReportes">
+                                                        <a href="<c:url value="srvReporte">
                                                                <c:param name="accion" value="verDetalle" />
                                                                <c:param name="cod" value="${v.codigov}" />
                                                            </c:url>">

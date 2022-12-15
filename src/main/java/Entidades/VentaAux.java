@@ -6,6 +6,7 @@ public class VentaAux {
     private String comprobante;
     private String serie;
     private String correlativo;
+    private int tipopago;
 
     public int getCliente() {
         return cliente;
@@ -38,4 +39,14 @@ public class VentaAux {
     public void setCorrelativo(String correlativo) {
         this.correlativo = correlativo;
     }
+
+    public int getTipopago() {
+        return tipopago;
+    }
+
+    public void setTipopago(int tipopago) {
+        this.tipopago = tipopago;
+    }
+    
+    
 }

@@ -1,92 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>srvUsuario</servlet-name>
+        <servlet-name>SrvUsuario</servlet-name>
         <servlet-class>Servlets.SrvUsuario</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>srvCategoria</servlet-name>
+        <servlet-name>SrvCategoria</servlet-name>
         <servlet-class>Servlets.SrvCategoria</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>srvClientes</servlet-name>
+        <servlet-name>SrvCliente</servlet-name>
         <servlet-class>Servlets.SrvCliente</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>srvCargo</servlet-name>
+        <servlet-name>SrvCargo</servlet-name>
         <servlet-class>Servlets.SrvCargo</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>srvProductos</servlet-name>
+        <servlet-name>SrvProducto</servlet-name>
         <servlet-class>Servlets.SrvProducto</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>srvEmpleados</servlet-name>
+        <servlet-name>SrvEmpleado</servlet-name>
         <servlet-class>Servlets.SrvEmpleado</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>srvProveedores</servlet-name>
+        <servlet-name>SrvProveedor</servlet-name>
         <servlet-class>Servlets.SrvProveedor</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>srvUsus</servlet-name>
+        <servlet-name>SrvUsu</servlet-name>
         <servlet-class>Servlets.SrvUsu</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>srvTipo_Pago</servlet-name>
+        <servlet-name>SrvTipo_Pago</servlet-name>
         <servlet-class>Servlets.SrvTipo_Pago</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>srvVentas</servlet-name>
+        <servlet-name>SrvVenta</servlet-name>
         <servlet-class>Servlets.SrvVenta</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>srvReportes</servlet-name>
+        <servlet-name>SrvReporte</servlet-name>
         <servlet-class>Servlets.SrvReporte</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>srvUsuario</servlet-name>
+        <servlet-name>SrvUsuario</servlet-name>
         <url-pattern>/srvUsuario</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>srvCategoria</servlet-name>
+        <servlet-name>SrvCategoria</servlet-name>
         <url-pattern>/srvCategoria</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>srvClientes</servlet-name>
+        <servlet-name>SrvCliente</servlet-name>
         <url-pattern>/srvClientes</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>srvCargo</servlet-name>
+        <servlet-name>SrvCargo</servlet-name>
         <url-pattern>/srvCargo</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>srvProductos</servlet-name>
+        <servlet-name>SrvProducto</servlet-name>
         <url-pattern>/srvProductos</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>srvEmpleados</servlet-name>
+        <servlet-name>SrvEmpleado</servlet-name>
         <url-pattern>/srvEmpleados</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>srvProveedores</servlet-name>
+        <servlet-name>SrvProveedor</servlet-name>
         <url-pattern>/srvProveedores</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>srvUsus</servlet-name>
+        <servlet-name>SrvUsu</servlet-name>
         <url-pattern>/srvUsus</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>srvTipo_Pago</servlet-name>
+        <servlet-name>SrvTipo_Pago</servlet-name>
         <url-pattern>/srvTipo_Pago</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>srvVentas</servlet-name>
-        <url-pattern>/srvVentas</url-pattern>
+        <servlet-name>SrvVenta</servlet-name>
+        <url-pattern>/srvVenta</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>srvReportes</servlet-name>
-        <url-pattern>/srvReportes</url-pattern>
+        <servlet-name>SrvReporte</servlet-name>
+        <url-pattern>/srvReporte</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

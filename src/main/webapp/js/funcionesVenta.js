@@ -133,8 +133,9 @@ $(function() {
                 objventa = {};
         objventa.cliente = elements[1].value;
         objventa.comprobante = elements[2].value;
-        objventa.serie = elements[3].value;
-        objventa.correlativo = elements[4].value;
+        objventa.tipopago = elements[3].value;
+        objventa.serie = elements[4].value;
+        objventa.correlativo = elements[5].value;
         
         if (array_productos.length > 0) {
             registrarVenta(objventa, array_productos);
@@ -146,7 +147,7 @@ $(function() {
     function obtenerProducto(descripcion) {
         $.ajax({
             type: 'POST',
-            url: "srvVentas",
+            url: "srvVenta",
             data: {
               action: 'obtenerProducto',
               descripcion: descripcion
@@ -168,7 +169,7 @@ $(function() {
     function obtenerCorrelativo(tipo) {
         $.ajax({
             type: 'POST',
-            url: "srvVentas",
+            url: "srvVenta",
             data: {
               action: 'obtenerCorrelativo',
               tipo: tipo
@@ -187,7 +188,7 @@ $(function() {
     function cargarDatos() {
         $.ajax({
             type: 'POST',
-            url: "srvVentas",
+            url: "srvVenta",
             data: {
               action: 'cargarDatos'  
             },
@@ -210,7 +211,7 @@ $(function() {
     function cargarPagos() {
         $.ajax({
             type: 'POST',
-            url: "srvVentas",
+            url: "srvVenta",
             data: {
               action: 'cargarTipoPago'  
             },
@@ -233,7 +234,7 @@ $(function() {
     function registrarVenta(data, detalles) {
         $.ajax({
             type: 'POST',
-            url: "srvVentas",
+            url: "srvVenta",
             data: {
               action: 'registrar',
               data_venta: JSON.stringify(data),
