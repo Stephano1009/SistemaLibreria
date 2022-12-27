@@ -136,7 +136,7 @@ public class SrvCliente extends HttpServlet {
             }
         } else {
             request.setAttribute("msje", "Rellene todos los campos obligatoriamente");
-                        this.presentarFormulario(request, response);
+            this.presentarFormulario(request, response);
 
         }
     }
@@ -179,6 +179,7 @@ public class SrvCliente extends HttpServlet {
             cli.setApellido(request.getParameter("txtApellidoCliente"));
             cli.setDireccion(request.getParameter("txtDireccion"));
             cli.setDni(request.getParameter("txtDNI"));
+            cli.setTipodocumento(request.getParameter("cbodocumento"));
 
             daoCli = new DAOCliente();
             try {

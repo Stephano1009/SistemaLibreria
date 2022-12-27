@@ -230,7 +230,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Tipo Documento</label>
-                                                <select class="form-control" onchange="cambiarLength(this);" id="cbodocumento" name="cbodocumento" required>
+                                                <select class="form-control" onchange="cambiarLength(this);" value="${cliente.tipodocumento} id="cbodocumento" name="cbodocumento" required>
                                                     <option value="null">Seleccione Documento</option>
                                                     <option value="D">DNI</option>
                                                     <option value="R">RUC</option>
