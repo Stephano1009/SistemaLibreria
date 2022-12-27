@@ -99,8 +99,10 @@ public class SrvVenta extends HttpServlet {
         output = response.getWriter();
 
         String action = request.getParameter("action");
-
-        if (action.equals("cargarDatos")) {
+        
+        if (action.equals("cargarDatosIniciales")) {
+            cargarDatosIniciales();
+        } else if (action.equals("cargarDatos")) {
             cargarClientes();
         } else if (action.equals("obtenerCorrelativo")) {
             obtenerCorrelativo(request.getParameter("tipo"));
@@ -220,6 +222,28 @@ public class SrvVenta extends HttpServlet {
         try {
             tipopago = dao.listar();
             print_success(tipopago);
+        } catch (Exception e) {
+            print_error(e.getMessage());
+        }
+    }
+     
+    private void cargarDatosIniciales() {
+        try {
+            HashMap<String, List<Object>> obj = new HashMap<>();
+            
+            DAOCliente daoCliente = new DAOCliente();
+            List<Cliente> clientes = daoCliente.cargarClientesVentas();
+            List<Object> list1 = new ArrayList<>();
+            list1.addAll(clientes);
+            obj.put("clientes", list1);
+            
+            DAOTipo_Pago daoTipopago = new DAOTipo_Pago();
+            List<Tipo_Pago> tipopago = daoTipopago.listar();
+            List<Object> list2 = new ArrayList<>();
+            list2.addAll(tipopago);
+            obj.put("tipopagos", list2);
+            
+            print_success(obj);
         } catch (Exception e) {
             print_error(e.getMessage());
         }

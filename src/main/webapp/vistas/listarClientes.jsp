@@ -224,9 +224,9 @@
                                             <thead>
                                                 <tr>
                                                     <th>Id_Cliente</th>
-                                                    <th>Nombre</th>
-                                                    <th>Apellido</th>
+                                                    <th>Cliente</th>
                                                     <th>Tipo Documento</th>
+                                                    <th>Documento</th>
                                                     <th>Direccion</th>       
                                                     <th class="text-center">Acciones</th>
                                                 </tr>
@@ -234,8 +234,8 @@
                                             <c:forEach var="cli" items="${clientes}" varStatus="iteracion">  
                                                 <tr>
                                                     <td>${iteracion.index + 1}</td>
-                                                    <td>${cli.nombre}</td>
-                                                    <td>${cli.apellido}</td>
+                                                    <td>${cli.nombre} ${cli.apellido}</td>
+                                                    <td>${cli.tipodocumento == "D" ? "DNI" : "RUC"}</td>
                                                     <td>${cli.dni}</td>
                                                     <td>${cli.direccion}</td>                                    
                                                     <td class="text-center">                                                     

@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.List;
 
 public class Conexion {
 
@@ -73,62 +72,4 @@ public class Conexion {
 
     return rs;
   }
-
-  protected Object ejecutarProcedimiento(String wProcedimiento,
-          List<Parametro> wParametros) throws Exception {
-    CallableStatement cs;
-    Object valor = null;
-    String parNombre = "";
-
-    try {
-      cs = this.getConexion().prepareCall(wProcedimiento);
-      if (wParametros != null) {
-        for (Parametro par : wParametros) {
-          if (par.isEntrada() == true) {
-            cs.setObject(par.getNombre(), par.getValor());
-          } else {
-            parNombre = par.getNombre();
-            cs.registerOutParameter(par.getNombre(), par.getTipo());
-          }
-        }
-      }
-      cs.executeUpdate();
-      if (parNombre.length() > 0) {
-        valor = cs.getObject(parNombre);
-      }
-    } catch (Exception e) {
-      throw e;
-    } finally {
-      cs = null;
-    }
-
-    return valor;
-  }
-
-  protected ResultSet ejecutarProcedimientoDatos(String wProcedimiento,
-          List<Parametro> wParametros) throws Exception {
-    CallableStatement cs;
-    ResultSet rs = null;
-
-    try {
-      cs = this.getConexion().prepareCall(wProcedimiento);
-      if (wParametros != null) {
-        for (Parametro par : wParametros) {
-          if (par.isEntrada() == true) {
-            cs.setObject(par.getNombre(), par.getValor());
-          } else {
-            // parametro de salida
-          }
-        }
-      }
-      rs = cs.executeQuery();
-    } catch (Exception e) {
-      throw e;
-    } finally {
-      cs = null;
-    }
-
-    return rs;
-  }
-
 }

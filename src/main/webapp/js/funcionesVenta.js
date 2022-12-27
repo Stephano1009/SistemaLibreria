@@ -38,11 +38,9 @@ $(function() {
         }
     });
     
-    $('#btn_agregar').keydown(function(ev) {
-        if (ev.keyCode === 13) {
-            agregar_producto_array();
-            ev.preventDefault();
-        }
+    $('#btn_agregar').click(function(ev) {
+        agregar_producto_array();
+        ev.preventDefault();
     });
     
     $('#form_venta').submit(function(ev) {
@@ -131,6 +129,7 @@ $(function() {
     function procesar_venta(self) {
         var elements = self.elements, 
                 objventa = {};
+        
         objventa.cliente = elements[1].value;
         objventa.comprobante = elements[2].value;
         objventa.tipopago = elements[3].value;
@@ -190,20 +189,37 @@ $(function() {
             type: 'POST',
             url: "srvVenta",
             data: {
-              action: 'cargarDatos'  
+              action: 'cargarDatosIniciales'  
             },
             dataType: 'json',
-            async: true,
+            // async: true,
             success: function (data) {
-                var response = data;
-                if (response.estado) {
-                    var data = response.data, 
-                            template = '';
-                    for (var i = 0; i < data.length; i++) {
-                        template += '<option value="'+ data[i].codigo +'">'+ data[i].nombre +'</option>';
-                    }
+                if (data.estado) {
+                    var template = ``;
+                    
+                    data.data.clientes.forEach((cli) => {
+                        template += `<option value="${cli.codigo}">${cli.nombre} ${cli.apellido}</option>`;
+                    });
+                    
                     $('#cbocliente').append(template);
+                    
+                    template = ``;
+                    
+                    data.data.tipopagos.forEach((tip) => {
+                        template += `<option value="${tip.codigopag}">${tip.nombretipopag}</option>`;
+                    });
+                    
+                    $('#cbotipopago').append(template);
                 }
+                
+//                if (data.estado) {
+//                    var aData = data.data, 
+//                            template = '';
+//                    for (var i = 0; i < aData.length; i++) {
+//                        template += '<option value="'+ aData[i].codigo +'">'+ aData[i].nombre +'</option>';
+//                    }
+//                    $('#cbocliente').append(template);
+//                }
             }
         });
     };
@@ -216,14 +232,15 @@ $(function() {
               action: 'cargarTipoPago'  
             },
             dataType: 'json',
-            async: true,
+            // async: true,
             success: function (data) {
-                var response = data;
-                if (response.estado) {
-                    var data = response.data, 
+                console.log(data);
+                // var response = data;
+                if (data.estado) {
+                    var aData = data.data, 
                             template = '';
-                    for (var i = 0; i < data.length; i++) {
-                        template += '<option value="'+ data[i].codigopag +'">'+ data[i].nombretipopag +'</option>';
+                    for (var i = 0; i < aData.length; i++) {
+                        template += '<option value="'+ aData[i].codigopag +'">'+ aData[i].nombretipopag +'</option>';
                     }
                     $('#cbotipopago').append(template);
                 }
@@ -256,5 +273,5 @@ $(function() {
     };
     
     cargarDatos();
-    cargarPagos();
+    // cargarPagos();
 });

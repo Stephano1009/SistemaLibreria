@@ -229,14 +229,22 @@
                                                 <input type="text" name="txtApellidoCliente" value="${cliente.apellido}" required="" class="form-control" id="exampleInputEmail1" placeholder="Dígite el Apellido">
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">DNI</label>
-                                                <input type="text" name="txtDNI" value="${cliente.dni}" required="" class="form-control" id="exampleInputEmail1" placeholder="Dígite su DNI">
+                                                <label>Tipo Documento</label>
+                                                <select class="form-control" onchange="cambiarLength(this);" id="cbodocumento" name="cbodocumento" required>
+                                                    <option value="null">Seleccione Documento</option>
+                                                    <option value="D">DNI</option>
+                                                    <option value="R">RUC</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">N° Documento</label>
+                                                <input type="text" id="documento" disabled="" name="txtDNI" maxlength="8" value="${cliente.dni}" required="" class="form-control" id="exampleInputEmail1" placeholder="Dígite su DNI">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Direccion</label>
                                                 <input type="text" name="txtDireccion" value="${cliente.direccion}" required="" class="form-control" id="exampleInputEmail1" placeholder="Ingrese su Dirección">
                                             </div>
-                                            
+
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
@@ -276,13 +284,13 @@
         <!-- ./wrapper -->
 
         <!-- REQUIRED SCRIPTS -->
-
         <!-- jQuery -->
         <script src="plugins/jquery/jquery.min.js"></script>
         <!-- Bootstrap 4 -->
         <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- AdminLTE App -->
         <script src="dist/js/adminlte.min.js"></script>
+        <script src="js/funcionesCliente.js" type="text/javascript"></script>
     </body>
 </html>
 <%

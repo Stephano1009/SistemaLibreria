@@ -13,7 +13,7 @@ public class DAOCliente extends Conexion {
         Cliente cli;
         ResultSet rs = null;
         String sql = "SELECT cli.ID_CLIENTE, cli.NOMBRE_CLIENTE,"
-                + " cli.APELLIDO_CLIENTE, cli.DIRECCION_CLIENTE, cli.NUMERODOC"
+                + " cli.APELLIDO_CLIENTE, cli.DIRECCION_CLIENTE, cli.NUMERODOC, cli.TIPO_DOCUMENTO"
                 + " FROM CLIENTE cli ORDER BY cli.NOMBRE_CLIENTE";
         try {
             this.conectar(false);
@@ -26,7 +26,7 @@ public class DAOCliente extends Conexion {
                 cli.setApellido(rs.getString("APELLIDO_CLIENTE"));
                 cli.setDireccion(rs.getString("DIRECCION_CLIENTE"));
                 cli.setDni(rs.getString("NUMERODOC"));
-
+                cli.setTipodocumento(rs.getString("TIPO_DOCUMENTO"));
                 clientes.add(cli);
             }
         } catch (Exception e) {
@@ -38,10 +38,10 @@ public class DAOCliente extends Conexion {
     }
 
     public void registrar(Cliente clientes) throws Exception {
-        String sql = "INSERT INTO Cliente( Nombre_Cliente, Apellido_Cliente, NUMERODOC, Direccion_Cliente)"
+        String sql = "INSERT INTO Cliente( Nombre_Cliente, Apellido_Cliente, NUMERODOC, Direccion_Cliente, TIPO_DOCUMENTO)"
                 + "VALUES( '" + clientes.getNombre() + "', '"
                 + clientes.getApellido() + "', '" + clientes.getDni() + "', '"
-                + clientes.getDireccion() + "')";
+                + clientes.getDireccion() + "', '" + clientes.getTipodocumento() + "')";
         try {
             this.conectar(false);
             this.ejecutarOrden(sql);
@@ -56,7 +56,7 @@ public class DAOCliente extends Conexion {
     public Cliente leer(Cliente clientes) throws Exception {
         Cliente cli = null;
         ResultSet rs = null;
-        String sql = "SELECT cli.ID_CLIENTE, cli.NOMBRE_CLIENTE, cli.APELLIDO_CLIENTE, cli.NUMERODOC, cli.DIRECCION_CLIENTE "
+        String sql = "SELECT cli.ID_CLIENTE, cli.NOMBRE_CLIENTE, cli.APELLIDO_CLIENTE, cli.NUMERODOC, cli.DIRECCION_CLIENTE, cli.TIPO_DOCUMENTO"
                 + " FROM CLIENTE cli WHERE cli.ID_CLIENTE =  " + clientes.getCodigo();
         try {
             this.conectar(false);
@@ -68,6 +68,7 @@ public class DAOCliente extends Conexion {
                 cli.setApellido(rs.getString("APELLIDO_CLIENTE"));
                 cli.setDni(rs.getString("NUMERODOC"));
                 cli.setDireccion(rs.getString("DIRECCION_CLIENTE"));
+                cli.setTipodocumento(rs.getString("TIPO_DOCUMENTO"));
             }
         } catch (Exception e) {
             throw e;
@@ -84,6 +85,7 @@ public class DAOCliente extends Conexion {
                 + "', APELLIDO_CLIENTE = '" + clientes.getApellido()
                 + "', NUMERODOC = '" + clientes.getDni()
                 + "', DIRECCION_CLIENTE = '" + clientes.getDireccion()
+                + "', TIPO_DOCUMENTO = '" + clientes.getTipodocumento()
                 + "' WHERE ID_CLIENTE = " + clientes.getCodigo();
         try {
             this.conectar(false);

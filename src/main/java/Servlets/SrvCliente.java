@@ -103,14 +103,19 @@ public class SrvCliente extends HttpServlet {
         DAOCliente dao;
         Cliente cli = null;
 
-        if (request.getParameter("txtNombreCliente") != null) {
+        if (request.getParameter("txtNombreCliente") != null
+                && request.getParameter("txtApellidoCliente") != null
+                && request.getParameter("txtDNI") != null
+                && request.getParameter("txtDireccion") != null
+                && request.getParameter("cbodocumento") != null) {
 
             cli = new Cliente();
             cli.setNombre(request.getParameter("txtNombreCliente"));
             cli.setApellido(request.getParameter("txtApellidoCliente"));
             cli.setDireccion(request.getParameter("txtDireccion"));
+            cli.setTipodocumento(request.getParameter("cbodocumento"));
             cli.setDni(request.getParameter("txtDNI"));
-            
+
             //VERIFICA EL ESTADO DE LA CATEGORIA SI ESTA ACTIVA O NO
             dao = new DAOCliente();
             //INSTANCIA EL OBJETO DAOCATEGORIA PARA PROCEDER CON EL REGISTRO
@@ -129,6 +134,10 @@ public class SrvCliente extends HttpServlet {
                 //PRESENTAR MENSAJE DE ERROR
             } finally {
             }
+        } else {
+            request.setAttribute("msje", "Rellene todos los campos obligatoriamente");
+                        this.presentarFormulario(request, response);
+
         }
     }
 
@@ -140,7 +149,7 @@ public class SrvCliente extends HttpServlet {
             cli = new Cliente();
             cli.setCodigo(Integer.parseInt(request.getParameter("cod")));
 
-             dao = new DAOCliente();
+            dao = new DAOCliente();
             try {
                 cli = dao.leer(cli);
                 if (cli != null) {
@@ -170,7 +179,7 @@ public class SrvCliente extends HttpServlet {
             cli.setApellido(request.getParameter("txtApellidoCliente"));
             cli.setDireccion(request.getParameter("txtDireccion"));
             cli.setDni(request.getParameter("txtDNI"));
-            
+
             daoCli = new DAOCliente();
             try {
                 daoCli.actualizar(cli);
@@ -183,13 +192,12 @@ public class SrvCliente extends HttpServlet {
                 this.presentarFormulario(request, response);
             } finally {
             }
-        }
-        else{
-            request.setAttribute("msje","Rellene obligatoriamente los campos");
+        } else {
+            request.setAttribute("msje", "Rellene obligatoriamente los campos");
         }
     }
 
-    private void eliminarClientes(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    private void eliminarClientes(HttpServletRequest request, HttpServletResponse response) throws Exception {
         DAOCliente daocli;
         Cliente cli;
         if (request.getParameter("cod") != null) {
@@ -202,7 +210,7 @@ public class SrvCliente extends HttpServlet {
             } catch (Exception e) {
                 request.setAttribute("msje", "No se pudo eliminar el cliente " + e.getMessage());
                 request.getRequestDispatcher("mensaje.jsp").forward(request, response);
-            }finally{
+            } finally {
                 daocli = null;
             }
         }

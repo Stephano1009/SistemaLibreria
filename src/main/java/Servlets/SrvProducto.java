@@ -7,7 +7,6 @@ import Entidades.Categoria;
 import Entidades.Producto;
 import Entidades.Proveedor;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -152,7 +151,7 @@ public class SrvProducto extends HttpServlet {
             pro.setNombrepro(request.getParameter("txtNombreProducto"));
             pro.setDescripcionpro(request.getParameter("txtDescripcion"));
             pro.setContenidopro(request.getParameter("txtContenido"));
-            pro.setPreciopro(Integer.parseInt(request.getParameter("txtPrecio")));
+            pro.setPreciopro(Double.parseDouble(request.getParameter("txtPrecio")));
             pro.setStockpro(Integer.parseInt(request.getParameter("txtStock")));
             
 
